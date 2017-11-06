@@ -350,6 +350,7 @@ function ImportPX4LogData()
     % convert the log file to csv files
     % *********************************
     if (loadingMode~=1) && (loadingMode~=2)
+        system(sprintf(['ulog2csv 04_log_files' '%s','%s' ' -o ' '05_csv_files'], pathDelimiter, fileName));
     end
     
     % *********************************
