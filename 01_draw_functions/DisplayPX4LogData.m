@@ -136,7 +136,7 @@ end
 
 % display estimator status data if it was logged
 if (topics.estimator_status.logged) && plotvector.estimatorStatusPlots
-    EstimatorStatusPlots(sysvector, topics);
+%     EstimatorStatusPlots(sysvector, topics);
 end
 
 % display gps and estimate on a map

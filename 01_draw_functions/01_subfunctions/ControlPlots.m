@@ -40,22 +40,22 @@ ylabel('Mode [-]')
 hold off
 
 % Angle plots
-[pitch, roll, yaw] = ...
+[pitch, roll, yaw, quatTime] = ...
         QuaternionToEuler(sysvector('vehicle_attitude_0.q_0'), sysvector('vehicle_attitude_0.q_1'),...
         sysvector('vehicle_attitude_0.q_2'), sysvector('vehicle_attitude_0.q_3'));
 
 axeshandle(end+1) = subplot_tight(nrSubplotSections,1,2,[plotmargins.vert plotmargins.horiz]);
 hold on;
-plot(yaw.Time, rad2deg(yaw.Data));
+plot(quatTime, rad2deg(yaw));
 plot(yawRef.Time, rad2deg(yawRef.Data));
 hold off;
 legend('Yaw Angle', 'Yaw Angle Ref')
 
 axeshandle(end+1) = subplot_tight(nrSubplotSections,1,[3 4],[plotmargins.vert plotmargins.horiz]);
 hold on;
-plot(roll.Time, rad2deg(roll.Data));
+plot(quatTime, rad2deg(roll));
 plot(rollRef.Time, rad2deg(rollRef.Data));
-plot(pitch.Time, rad2deg(pitch.Data));
+plot(quatTime, rad2deg(pitch));
 plot(pitchRef.Time, rad2deg(pitchRef.Data));
 hold off;
 legend('Roll Angle', 'Roll Angle Ref', 'Pitch Angle', 'Pitch Ref');    
@@ -90,7 +90,7 @@ axeshandle(end+1) = subplot_tight(nrSubplotSections,1,[9],[plotmargins.vert plot
 hold on;
 plot(sysvector('airspeed_0.true_airspeed_m_s').Time, sysvector('airspeed_0.true_airspeed_m_s').Data);
 plot(sysvector('airspeed_0.indicated_airspeed_m_s').Time, sysvector('airspeed_0.indicated_airspeed_m_s').Data);
-plot(sysvector('tecs_status_0.airspeedSp').Time, sysvector('tecs_status_0.airspeedSp').Data);
+plot(sysvector('tecs_status_0.airspeed_sp').Time, sysvector('tecs_status_0.airspeed_sp').Data);
 % TODO add here v ref nom, v ref min, v ref max
 legend('v_{TAS} [m/s]','v_{IAS} [m/s]', 'v_{TAS} ref[m/s]');
 ylabel('Airsp. [m/s]')
@@ -99,7 +99,7 @@ ylabel('Airsp. [m/s]')
 axeshandle(end+1) = subplot_tight(nrSubplotSections,1,[10 11],[plotmargins.vert plotmargins.horiz]);
 plot(sysvector('vehicle_global_position_0.alt').Time, sysvector('vehicle_global_position_0.alt').Data);
 hold on;
-plot(sysvector('tecs_status_0.altitudeSp').Time, sysvector('tecs_status_0.altitudeSp').Data);
+plot(sysvector('tecs_status_0.altitude_sp').Time, sysvector('tecs_status_0.altitude_sp').Data);
 plot(sysvector('position_setpoint_triplet_0.current_alt').Time, sysvector('position_setpoint_triplet_0.current_alt').Data);
 plot(sysvector('vehicle_gps_position_0.alt').Time, sysvector('vehicle_gps_position_0.alt').Data*fconv_gpsalt);
 terrain_alt = sysvector('vehicle_global_position_0.terrain_alt').Data;
@@ -140,9 +140,9 @@ hold off
 
 axeshandle(end+1) = subplot_tight(nrSubplotSections,1,[2 3],[plotmargins.vert plotmargins.horiz]);
 hold on;
-plot(roll.Time, rad2deg(roll.Data));
+plot(quatTime, rad2deg(roll));
 plot(rollRef.Time, rad2deg(rollRef.Data));
-plot(pitch.Time, rad2deg(pitch.Data));
+plot(quatTime, rad2deg(pitch));
 plot(pitchRef.Time, rad2deg(pitchRef.Data));
 plot(sysvector('tecs_status_0.pitch_integ').Time, rad2deg(sysvector('tecs_status_0.pitch_integ').Data ./ (sysvector('tecs_status_0.airspeed_filtered').Data*5*9.81)));
 hold off;
@@ -164,7 +164,7 @@ hold on;
 plot(sysvector('airspeed_0.true_airspeed_m_s').Time, sysvector('airspeed_0.true_airspeed_m_s').Data);
 plot(sysvector('tecs_status_0.airspeed_filtered').Time, sysvector('tecs_status_0.airspeed_filtered').Data);
 plot(sysvector('airspeed_0.indicated_airspeed_m_s').Time, sysvector('airspeed_0.indicated_airspeed_m_s').Data);
-plot(sysvector('tecs_status_0.airspeedSp').Time, sysvector('tecs_status_0.airspeedSp').Data);
+plot(sysvector('tecs_status_0.airspeed_sp').Time, sysvector('tecs_status_0.airspeed_sp').Data);
 % TODO add here v ref nom, v ref min, v ref max
 legend('v_{TAS} [m/s]','v_{TAS} (filtered) [m/s]','v_{IAS} [m/s]', 'v_{TAS} ref[m/s]');
 ylabel('Airsp.')
@@ -172,18 +172,18 @@ ylabel('Airsp.')
 % airspeed plots
 axeshandle(end+1) = subplot_tight(nrSubplotSections,1,[8 9],[plotmargins.vert plotmargins.horiz]);
 hold on;
-plot(sysvector('tecs_status_0.airspeedDerivativeSp').Time, sysvector('tecs_status_0.airspeedDerivativeSp').Data);
-plot(sysvector('tecs_status_0.airspeedDerivative').Time, sysvector('tecs_status_0.airspeedDerivative').Data);
+plot(sysvector('tecs_status_0.airspeed_derivative_sp').Time, sysvector('tecs_status_0.airspeed_derivative_sp').Data);
+plot(sysvector('tecs_status_0.airspeed_derivative').Time, sysvector('tecs_status_0.airspeed_derivative').Data);
 legend('dv/dt_{TAS,ref} [m/s²]','dv/dt_{TAS} [m/s²]');
 ylabel('Airsp. der.')
 
 % Energy (and rate) errors
 axeshandle(end+1) = subplot_tight(nrSubplotSections,1,[10 11],[plotmargins.vert plotmargins.horiz]);
 hold on;
-plot(sysvector('tecs_status_0.totalEnergyError').Time, sysvector('tecs_status_0.totalEnergyError').Data);
-plot(sysvector('tecs_status_0.totalEnergyRateError').Time, sysvector('tecs_status_0.totalEnergyRateError').Data);
-plot(sysvector('tecs_status_0.energyDistributionError').Time, sysvector('tecs_status_0.energyDistributionError').Data);
-plot(sysvector('tecs_status_0.energyDistributionRateError').Time, sysvector('tecs_status_0.energyDistributionRateError').Data);
+plot(sysvector('tecs_status_0.total_energy_error').Time, sysvector('tecs_status_0.total_energy_error').Data);
+plot(sysvector('tecs_status_0.total_energy_rate_error').Time, sysvector('tecs_status_0.total_energy_rate_error').Data);
+plot(sysvector('tecs_status_0.energy_distribution_error').Time, sysvector('tecs_status_0.energy_distribution_error').Data);
+plot(sysvector('tecs_status_0.energy_distribution_rate_error').Time, sysvector('tecs_status_0.energy_distribution_rate_error').Data);
 legend('Total energy error','Total energy rate error','Energy distribution error','Energy distrib. rate error');
 ylabel('Energy')
 
@@ -191,7 +191,7 @@ ylabel('Energy')
 axeshandle(end+1) = subplot_tight(nrSubplotSections,1,[12 13],[plotmargins.vert plotmargins.horiz]);
 plot(sysvector('vehicle_global_position_0.alt').Time, sysvector('vehicle_global_position_0.alt').Data);
 hold on;
-plot(sysvector('tecs_status_0.altitudeSp').Time, sysvector('tecs_status_0.altitudeSp').Data);
+plot(sysvector('tecs_status_0.altitude_sp').Time, sysvector('tecs_status_0.altitude_sp').Data);
 plot(sysvector('position_setpoint_triplet_0.current_alt').Time, sysvector('position_setpoint_triplet_0.current_alt').Data);
 terrain_alt = sysvector('vehicle_global_position_0.terrain_alt').Data;
 terrain_alt(sysvector('vehicle_global_position_0.terrain_alt_valid').Data == 0) = NaN;
