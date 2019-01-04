@@ -15,7 +15,7 @@ function logconv()
 % Clear everything
 clc;
 clear all;
-close all;
+% close all;
 
 addpath(genpath('01_draw_functions'));
 addpath(genpath('02_helper_functions'));
@@ -32,7 +32,8 @@ addpath(genpath('07_kmz_files'));
 % set the path to your log file here file here, the log file must be in the
 % 04_log_files or one of its subfolders. If it is located in a subfolder
 % the path from the level of the 04_log_files needs to be specified here.
-fileName = 'log_12_2018-11-12-15-24-13.ulg';
+% fileName = '12-27-2018-myCode2/log_22_2018-12-27-16-48-26.ulg';
+fileName = '12-27-2018-orinalCode/log_2_2019-1-3-18-31-01.ulg';
 
 % the source from which the data is imported
 % 0: converting the ulog to csv files and then parsing the csv files
@@ -113,6 +114,9 @@ else
     ImportPX4LogData();
 end
 
+assignin('base', 'topics' , topics);
+assignin('base', 'sysvector' , sysvector);
+
 % ******************
 % Crop the data
 % ******************
@@ -126,7 +130,6 @@ CropPX4LogData();
 if generatePlots
     DisplayPX4LogData(sysvector, topics, plainFileName, fconv_gpsalt, fconv_gpslatlong)
 end
-
 
 %% ************************************************************************
 %  *** END OF MAIN SCRIPT ***

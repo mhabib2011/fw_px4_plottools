@@ -12,25 +12,25 @@ function DisplayPX4LogData(sysvector, topics, plainFileName, fconv_gpsalt, fconv
 % *********************
 % Enable/Disable Plots
 % *********************
-plotvector.gpsPlots = true;
-plotvector.sensorPlots = true;
-plotvector.differentialPressurePlots = true;
-plotvector.estimatorPlots = true;
-plotvector.estimatorStatusPlots = true;
-plotvector.globalPositionPlots = true;
-plotvector.windPlots = true;
+    plotvector.gpsPlots = false;
+    plotvector.sensorPlots = false;
+    plotvector.differentialPressurePlots = false;
+    plotvector.estimatorPlots = false;
+    plotvector.estimatorStatusPlots = false;
+    plotvector.globalPositionPlots = false;
+    plotvector.windPlots = false;
 plotvector.controlPlots = true;
-plotvector.telemRSSIPlots = true;
-plotvector.rawSensorPlots = true;
-plotvector.cpuLoadPlots = true;
-plotvector.distanceSensorPlots = true;
-plotvector.missionResultPlots = true;
-plotvector.vehicleStatusFlags = true;
-plotvector.magVsThrustPlots = true;
-plotvector.powerPlots = true;
-plotvector.BatMonPlots = true;
-plotvector.iridiumsbdStatusPlots = true;
-plotvector.mpptPlots = true;
+    plotvector.telemRSSIPlots = false;
+    plotvector.rawSensorPlots = false;
+    plotvector.cpuLoadPlots = false;
+    plotvector.distanceSensorPlots = false;
+    plotvector.missionResultPlots = false;
+    plotvector.vehicleStatusFlags = false;
+    plotvector.magVsThrustPlots = false;
+    plotvector.powerPlots = false;
+    plotvector.BatMonPlots = false;
+    plotvector.iridiumsbdStatusPlots = false;
+    plotvector.mpptPlots = false;
 
 % *********************
 % Link the Figure Axis Settings
@@ -154,9 +154,10 @@ end
 % display the controller data
 if (topics.vehicle_attitude.logged && topics.vehicle_attitude_setpoint.logged &&...
         topics.vehicle_rates_setpoint.logged && topics.airspeed.logged &&...
-        topics.tecs_status.logged && topics.vehicle_gps_position.logged &&...
+        topics.vehicle_gps_position.logged &&...
         plotvector.controlPlots)
-    ControlPlots(sysvector, fconv_gpsalt);
+    % topics.tecs_status.logged && 
+    ControlPlots(sysvector);
 end
 
 % display the telemetry data
@@ -192,7 +193,7 @@ if (topics.vehicle_status_flags.logged && plotvector.vehicleStatusFlags)
 end
 
 % mag norm versus thrust plot
-if (topics.actuator_controls.logged && topics.sensor_mag.logged && plotvector.magVsThrustPlots)
+if (topics.actuator_controls_0.logged && topics.sensor_mag.logged && plotvector.magVsThrustPlots)
     MagVsThrustPlots(sysvector);
 end
 
