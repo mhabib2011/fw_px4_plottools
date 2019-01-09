@@ -1,6 +1,17 @@
 function ControlPlots(sysvector)
 
 %% My plots
+
+plot3(sysvector('vehicle_local_position_0.x').Data, ...
+    sysvector('vehicle_local_position_0.y').Data, ...
+    -sysvector('vehicle_local_position_0.z').Data)
+hold on;
+plot3(sysvector('vehicle_local_position_setpoint_0.x').Data, ...
+    sysvector('vehicle_local_position_setpoint_0.y').Data, ...
+    -sysvector('vehicle_local_position_setpoint_0.z').Data)
+legend('vehicle position', 'vehicle setpoint')
+
+
 figure()
 
 i = 1;
@@ -8,8 +19,10 @@ i = 1;
 % longitudinal and lateral error
 ax1 = subplot(3,4,i);
 hold on;
-plot(sysvector('vehicle_local_position_0.lat_err').Time, sysvector('vehicle_local_position_0.lat_err').Data);
-plot(sysvector('vehicle_local_position_0.alt_err').Time, sysvector('vehicle_local_position_0.alt_err').Data);
+plot(sysvector('vehicle_local_position_setpoint_0.lat_err').Time, ...
+    sysvector('vehicle_local_position_setpoint_0.lat_err').Data);
+plot(sysvector('vehicle_local_position_setpoint_0.alt_err').Time, ...
+    sysvector('vehicle_local_position_setpoint_0.alt_err').Data);
 hold off;
 legend('lat err', 'alt err')
 i = i + 1; 
@@ -18,23 +31,28 @@ i = i + 1;
 ax2 = subplot(3,4,i);
 hold on;
 plot(sysvector('vehicle_attitude_0.roll').Time, sysvector('vehicle_attitude_0.roll').Data);
-plot(sysvector('vehicle_attitude_setpoint_0.roll_body').Time, sysvector('vehicle_attitude_setpoint_0.roll_body').Data);
+plot(sysvector('vehicle_attitude_setpoint_0.roll_body').Time, ...
+    sysvector('vehicle_attitude_setpoint_0.roll_body').Data);
 hold off;
 legend('roll Angle', 'roll Angle Ref')
 i = i + 1; 
 
 ax3 = subplot(3,4,i);
 hold on;
-plot(sysvector('vehicle_attitude_0.pitch').Time, sysvector('vehicle_attitude_0.pitch').Data);
-plot(sysvector('vehicle_attitude_setpoint_0.pitch_body').Time, sysvector('vehicle_attitude_setpoint_0.pitch_body').Data);
+plot(sysvector('vehicle_attitude_0.pitch').Time, ...
+    sysvector('vehicle_attitude_0.pitch').Data);
+plot(sysvector('vehicle_attitude_setpoint_0.pitch_body').Time, ...
+    sysvector('vehicle_attitude_setpoint_0.pitch_body').Data);
 hold off;
 legend('pitch Angle', 'pitch Angle Ref')
 i = i + 1;
 
 ax4 = subplot(3,4,i);
 hold on;
-plot(sysvector('vehicle_attitude_0.yaw').Time, sysvector('vehicle_attitude_0.yaw').Data);
-plot(sysvector('vehicle_attitude_setpoint_0.yaw_body').Time, sysvector('vehicle_attitude_setpoint_0.yaw_body').Data);
+plot(sysvector('vehicle_attitude_0.yaw').Time, ...
+    sysvector('vehicle_attitude_0.yaw').Data);
+plot(sysvector('vehicle_attitude_setpoint_0.yaw_body').Time, ...
+    sysvector('vehicle_attitude_setpoint_0.yaw_body').Data);
 hold off;
 legend('Yaw Angle', 'Yaw Angle Ref')
 i = i + 1;
@@ -42,9 +60,12 @@ i = i + 1;
 % Flight mode transit status
 ax5 = subplot(3,4,i);
 hold on;
-plot(sysvector('vtol_vehicle_status_0.vtol_in_trans_mode').Time, sysvector('vtol_vehicle_status_0.vtol_in_trans_mode').Data);
-plot(sysvector('vtol_vehicle_status_0.vtol_in_rw_mode').Time, sysvector('vtol_vehicle_status_0.vtol_in_rw_mode').Data);
-plot(sysvector('vtol_vehicle_status_0.in_transition_to_fw').Time, sysvector('vtol_vehicle_status_0.in_transition_to_fw').Data);
+plot(sysvector('vtol_vehicle_status_0.vtol_in_trans_mode').Time, ...
+    sysvector('vtol_vehicle_status_0.vtol_in_trans_mode').Data);
+plot(sysvector('vtol_vehicle_status_0.vtol_in_rw_mode').Time, ...
+    sysvector('vtol_vehicle_status_0.vtol_in_rw_mode').Data);
+plot(sysvector('vtol_vehicle_status_0.in_transition_to_fw').Time, ...
+    sysvector('vtol_vehicle_status_0.in_transition_to_fw').Data);
 legend('vtol in trans mode', 'vtol in rw mode', 'in transition to fw');
 ylabel('Act. outputs []')
 i = i + 1;
@@ -52,24 +73,30 @@ i = i + 1;
 % attitude rate control
 ax6 = subplot(3,4,i);
 hold on;
-plot(sysvector('vehicle_attitude_0.rollspeed').Time, rad2deg(sysvector('vehicle_attitude_0.rollspeed').Data));
-plot(sysvector('vehicle_rates_setpoint_0.roll').Time, sysvector('vehicle_rates_setpoint_0.roll').Data);
+plot(sysvector('vehicle_attitude_0.rollspeed').Time, ...
+    rad2deg(sysvector('vehicle_attitude_0.rollspeed').Data));
+plot(sysvector('vehicle_rates_setpoint_0.roll').Time, ...
+    sysvector('vehicle_rates_setpoint_0.roll').Data);
 hold off;
 legend('p','pRef');
 i = i + 1;
 
 ax7 = subplot(3,4,i);
 hold on;
-plot(sysvector('vehicle_attitude_0.pitchspeed').Time, rad2deg(sysvector('vehicle_attitude_0.pitchspeed').Data));
-plot(sysvector('vehicle_rates_setpoint_0.pitch').Time, sysvector('vehicle_rates_setpoint_0.pitch').Data);
+plot(sysvector('vehicle_attitude_0.pitchspeed').Time, ...
+    rad2deg(sysvector('vehicle_attitude_0.pitchspeed').Data));
+plot(sysvector('vehicle_rates_setpoint_0.pitch').Time, ...
+    sysvector('vehicle_rates_setpoint_0.pitch').Data);
 hold off;
 legend('q','qRef');
 i = i + 1;
 
 ax8 = subplot(3,4,i);
 hold on;
-plot(sysvector('vehicle_attitude_0.yawspeed').Time, rad2deg(sysvector('vehicle_attitude_0.yawspeed').Data));
-plot(sysvector('vehicle_rates_setpoint_0.yaw').Time, sysvector('vehicle_rates_setpoint_0.yaw').Data);
+plot(sysvector('vehicle_attitude_0.yawspeed').Time, ...
+    rad2deg(sysvector('vehicle_attitude_0.yawspeed').Data));
+plot(sysvector('vehicle_rates_setpoint_0.yaw').Time, ...
+    sysvector('vehicle_rates_setpoint_0.yaw').Data);
 hold off;
 legend('r','rRef');
 ylabel('Rates [deg/s]')
@@ -78,36 +105,54 @@ i = i + 1;
 % actuator plots
 ax9 = subplot(3,4,i);
 hold on;
-plot(sysvector('actuator_controls_0_0.control_0').Time, sysvector('actuator_controls_0_0.control_0').Data);
-plot(sysvector('actuator_controls_0_0.control_1').Time, sysvector('actuator_controls_0_0.control_1').Data);
-plot(sysvector('actuator_controls_0_0.control_2').Time, sysvector('actuator_controls_0_0.control_2').Data);
-plot(sysvector('actuator_controls_0_0.control_3').Time, sysvector('actuator_controls_0_0.control_3').Data);
-plot(sysvector('actuator_controls_0_0.control_4').Time, sysvector('actuator_controls_0_0.control_4').Data);
+plot(sysvector('actuator_controls_0_0.control_0').Time, ...
+    sysvector('actuator_controls_0_0.control_0').Data);
+plot(sysvector('actuator_controls_0_0.control_1').Time, ...
+    sysvector('actuator_controls_0_0.control_1').Data);
+plot(sysvector('actuator_controls_0_0.control_2').Time, ...
+    sysvector('actuator_controls_0_0.control_2').Data);
+plot(sysvector('actuator_controls_0_0.control_3').Time, ...
+    sysvector('actuator_controls_0_0.control_3').Data);
+plot(sysvector('actuator_controls_0_0.control_4').Time, ...
+    sysvector('actuator_controls_0_0.control_4').Data);
 legend('u_{ail}','u_{elev}', 'u_{rud}', 'u_{throt}', 'u_{flaps}');
 ylabel('Act. controls []')
 i = i + 1;
 
 ax10 = subplot(3,4,i);
 hold on;
-plot(sysvector('actuator_controls_1_0.control_0').Time, sysvector('actuator_controls_1_0.control_0').Data);
-plot(sysvector('actuator_controls_1_0.control_1').Time, sysvector('actuator_controls_1_0.control_1').Data);
-plot(sysvector('actuator_controls_1_0.control_2').Time, sysvector('actuator_controls_1_0.control_2').Data);
-plot(sysvector('actuator_controls_1_0.control_3').Time, sysvector('actuator_controls_1_0.control_3').Data);
-plot(sysvector('actuator_controls_1_0.control_4').Time, sysvector('actuator_controls_1_0.control_4').Data);
+plot(sysvector('actuator_controls_1_0.control_0').Time, ...
+    sysvector('actuator_controls_1_0.control_0').Data);
+plot(sysvector('actuator_controls_1_0.control_1').Time, ...
+    sysvector('actuator_controls_1_0.control_1').Data);
+plot(sysvector('actuator_controls_1_0.control_2').Time, ...
+    sysvector('actuator_controls_1_0.control_2').Data);
+plot(sysvector('actuator_controls_1_0.control_3').Time, ...
+    sysvector('actuator_controls_1_0.control_3').Data);
+plot(sysvector('actuator_controls_1_0.control_4').Time, ...
+    sysvector('actuator_controls_1_0.control_4').Data);
 legend('u_{ail}','u_{elev}', 'u_{rud}', 'u_{throt}', 'u_{flaps}');
 ylabel('Act. controls []')
 i = i + 1;
 
 ax11 = subplot(3,4,i);
 hold on;
-plot(sysvector('actuator_outputs_0.output_0').Time, sysvector('actuator_outputs_0.output_0').Data);
-plot(sysvector('actuator_outputs_0.output_1').Time, sysvector('actuator_outputs_0.output_1').Data);
-plot(sysvector('actuator_outputs_0.output_2').Time, sysvector('actuator_outputs_0.output_2').Data);
-plot(sysvector('actuator_outputs_0.output_3').Time, sysvector('actuator_outputs_0.output_3').Data);
-plot(sysvector('actuator_outputs_0.output_4').Time, sysvector('actuator_outputs_0.output_4').Data);
-plot(sysvector('actuator_outputs_0.output_5').Time, sysvector('actuator_outputs_0.output_5').Data);
-plot(sysvector('actuator_outputs_0.output_6').Time, sysvector('actuator_outputs_0.output_6').Data);
-plot(sysvector('actuator_outputs_0.output_7').Time, sysvector('actuator_outputs_0.output_7').Data);
+plot(sysvector('actuator_outputs_0.output_0').Time, ...
+    sysvector('actuator_outputs_0.output_0').Data);
+plot(sysvector('actuator_outputs_0.output_1').Time, ...
+    sysvector('actuator_outputs_0.output_1').Data);
+plot(sysvector('actuator_outputs_0.output_2').Time, ...
+    sysvector('actuator_outputs_0.output_2').Data);
+plot(sysvector('actuator_outputs_0.output_3').Time, ...
+    sysvector('actuator_outputs_0.output_3').Data);
+plot(sysvector('actuator_outputs_0.output_4').Time, ...
+    sysvector('actuator_outputs_0.output_4').Data);
+plot(sysvector('actuator_outputs_0.output_5').Time, ...
+    sysvector('actuator_outputs_0.output_5').Data);
+plot(sysvector('actuator_outputs_0.output_6').Time, ...
+    sysvector('actuator_outputs_0.output_6').Data);
+plot(sysvector('actuator_outputs_0.output_7').Time, ...
+    sysvector('actuator_outputs_0.output_7').Data);
 legend('motor 1','mototr 2', 'motor 3', 'motor 4', 'flaps', 'elevon 1', 'elevon 2', 'fake elevator');
 ylabel('Act. outputs []')
 i = i + 1;
