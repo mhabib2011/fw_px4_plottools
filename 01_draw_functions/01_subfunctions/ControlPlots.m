@@ -1,6 +1,7 @@
-function ControlPlots(sysvector)
+% function ControlPlots(sysvector)
 
 %% My plots
+figure()
 
 plot3(sysvector('vehicle_local_position_0.x').Data, ...
     sysvector('vehicle_local_position_0.y').Data, ...
@@ -10,6 +11,9 @@ plot3(sysvector('vehicle_local_position_setpoint_0.x').Data, ...
     sysvector('vehicle_local_position_setpoint_0.y').Data, ...
     -sysvector('vehicle_local_position_setpoint_0.z').Data)
 legend('vehicle position', 'vehicle setpoint')
+xlabel('x')
+ylabel('y')
+zlabel('z')
 
 
 figure()
@@ -30,9 +34,10 @@ i = i + 1;
 % attitude control
 ax2 = subplot(3,4,i);
 hold on;
-plot(sysvector('vehicle_attitude_0.roll').Time, sysvector('vehicle_attitude_0.roll').Data);
+plot(sysvector('vehicle_attitude_0.roll').Time, ...
+    sysvector('vehicle_attitude_0.roll').Data*180/pi);
 plot(sysvector('vehicle_attitude_setpoint_0.roll_body').Time, ...
-    sysvector('vehicle_attitude_setpoint_0.roll_body').Data);
+    sysvector('vehicle_attitude_setpoint_0.roll_body').Data*180/pi);
 hold off;
 legend('roll Angle', 'roll Angle Ref')
 i = i + 1; 
@@ -40,9 +45,9 @@ i = i + 1;
 ax3 = subplot(3,4,i);
 hold on;
 plot(sysvector('vehicle_attitude_0.pitch').Time, ...
-    sysvector('vehicle_attitude_0.pitch').Data);
+    sysvector('vehicle_attitude_0.pitch').Data*180/pi);
 plot(sysvector('vehicle_attitude_setpoint_0.pitch_body').Time, ...
-    sysvector('vehicle_attitude_setpoint_0.pitch_body').Data);
+    sysvector('vehicle_attitude_setpoint_0.pitch_body').Data*180/pi);
 hold off;
 legend('pitch Angle', 'pitch Angle Ref')
 i = i + 1;
@@ -50,9 +55,9 @@ i = i + 1;
 ax4 = subplot(3,4,i);
 hold on;
 plot(sysvector('vehicle_attitude_0.yaw').Time, ...
-    sysvector('vehicle_attitude_0.yaw').Data);
+    sysvector('vehicle_attitude_0.yaw').Data*180/pi);
 plot(sysvector('vehicle_attitude_setpoint_0.yaw_body').Time, ...
-    sysvector('vehicle_attitude_setpoint_0.yaw_body').Data);
+    sysvector('vehicle_attitude_setpoint_0.yaw_body').Data*180/pi);
 hold off;
 legend('Yaw Angle', 'Yaw Angle Ref')
 i = i + 1;
@@ -157,7 +162,16 @@ legend('motor 1','mototr 2', 'motor 3', 'motor 4', 'flaps', 'elevon 1', 'elevon 
 ylabel('Act. outputs []')
 i = i + 1;
 
-linkaxes([ax1, ax2, ax3, ax4, ax5, ax6, ax7, ax8, ax9, ax10, ax11],'x')
+ax12 = subplot(3,4,i);
+hold on;
+plot(sysvector('vehicle_status_flags_0.condition_global_position_valid'));
+plot(sysvector('vehicle_status_flags_0.condition_home_position_valid'));
+plot(sysvector('mission_result_0.valid'));
+ylabel('Status Flags')
+legend('global position valid','local position valid', 'mission result valid')
+i = i + 1;
+
+linkaxes([ax1, ax2, ax3, ax4, ax5, ax6, ax7, ax8, ax9, ax10, ax11, ax12],'x')
 
 
 %% Display the low level controller data.
