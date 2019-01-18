@@ -32,8 +32,8 @@ addpath(genpath('07_kmz_files'));
 % set the path to your log file here file here, the log file must be in the
 % 04_log_files or one of its subfolders. If it is located in a subfolder
 % the path from the level of the 04_log_files needs to be specified here.
-% fileName = '12-27-2018-myCode2/log_22_2018-12-27-16-48-26.ulg';
-fileName = '12-27-2018-orinalCode/log_2_2019-1-3-18-31-01.ulg';
+% fileName = '12-27-2018-myCode2/log_0_2019-1-10-16-37-24.ulg';
+fileName = '12-27-2018-orinalCode/log_1_2019-1-17-15-24-35.ulg';
 
 % the source from which the data is imported
 % 0: converting the ulog to csv files and then parsing the csv files

@@ -1,4 +1,4 @@
-% function ControlPlots(sysvector)
+function ControlPlots(sysvector)
 
 %% My plots
 figure()
@@ -16,11 +16,92 @@ ylabel('y')
 zlabel('z')
 
 
-figure()
 
-i = 1;
+% ts_acceleration_controller
+figure()
+i=1;
+ax1 = subplot(2,3,i);
+hold on
+plot(sysvector('vehicle_local_position_setpoint_0.x').Time, ...
+    sysvector('vehicle_local_position_setpoint_0.x').Data);
+plot(sysvector('vehicle_local_position_0.x').Time, ...
+    sysvector('vehicle_local_position_0.x').Data);
+hold off
+legend ('setpoint x','position x')
+i = i + 1;
+
+ax2 = subplot(2,3,i);
+hold on
+plot(sysvector('vehicle_local_position_setpoint_0.y').Time, ...
+    sysvector('vehicle_local_position_setpoint_0.y').Data);
+plot(sysvector('vehicle_local_position_0.y').Time, ...
+    sysvector('vehicle_local_position_0.y').Data);
+hold off
+legend ('setpoint y','position y')
+i = i + 1;
+
+ax3 = subplot(2,3,i);
+hold on
+plot(sysvector('vehicle_local_position_setpoint_0.z').Time, ...
+    sysvector('vehicle_local_position_setpoint_0.z').Data);
+plot(sysvector('vehicle_local_position_0.z').Time, ...
+    sysvector('vehicle_local_position_0.z').Data);
+hold off
+legend ('setpoint z','position z')
+i = i + 1;
+
+ax4 = subplot(2,3,i);
+hold on;
+plot(sysvector('ts_controls_0.pos_err_0').Time, ...
+    sysvector('ts_controls_0.pos_err_0').Data);
+plot(sysvector('ts_controls_0.vel_cmd_0').Time, ...
+    sysvector('ts_controls_0.vel_cmd_0').Data);
+plot(sysvector('ts_controls_0.vel_err_0').Time, ...
+    sysvector('ts_controls_0.vel_err_0').Data);
+plot(sysvector('ts_controls_0.vel_int_0').Time, ...
+    sysvector('ts_controls_0.vel_int_0').Data);
+plot(sysvector('ts_controls_0.acc_cmd_0').Time, ...
+    sysvector('ts_controls_0.acc_cmd_0').Data);
+hold off;
+legend('pos_err', 'vel cmd', 'vel err', 'vel int', 'acc_cmd')
+i = i + 1;
+
+ax5 = subplot(2,3,i);
+hold on;
+plot(sysvector('ts_controls_0.pos_err_1').Time, ...
+    sysvector('ts_controls_0.pos_err_1').Data);
+plot(sysvector('ts_controls_0.vel_cmd_1').Time, ...
+    sysvector('ts_controls_0.vel_cmd_1').Data);
+plot(sysvector('ts_controls_0.vel_err_1').Time, ...
+    sysvector('ts_controls_0.vel_err_1').Data);
+plot(sysvector('ts_controls_0.vel_int_1').Time, ...
+    sysvector('ts_controls_0.vel_int_1').Data);
+plot(sysvector('ts_controls_0.acc_cmd_1').Time, ...
+    sysvector('ts_controls_0.acc_cmd_1').Data);
+hold off;
+legend('pos_err', 'vel cmd', 'vel err', 'vel int', 'acc_cmd')
+i = i + 1;
+
+ax6 = subplot(2,3,i);
+hold on;
+plot(sysvector('ts_controls_0.pos_err_2').Time, ...
+    sysvector('ts_controls_0.pos_err_2').Data);
+plot(sysvector('ts_controls_0.vel_cmd_2').Time, ...
+    sysvector('ts_controls_0.vel_cmd_2').Data);
+plot(sysvector('ts_controls_0.vel_err_2').Time, ...
+    sysvector('ts_controls_0.vel_err_2').Data);
+plot(sysvector('ts_controls_0.vel_int_2').Time, ...
+    sysvector('ts_controls_0.vel_int_2').Data);
+plot(sysvector('ts_controls_0.acc_cmd_2').Time, ...
+    sysvector('ts_controls_0.acc_cmd_2').Data);
+hold off;
+legend('pos_err', 'vel cmd', 'vel err', 'vel int', 'acc_cmd')
+linkaxes([ax1, ax2, ax3, ax4, ax5, ax6],'x')
+
 
 % longitudinal and lateral error
+figure()
+i = 1;
 ax1 = subplot(3,4,i);
 hold on;
 plot(sysvector('vehicle_local_position_setpoint_0.lat_err').Time, ...
